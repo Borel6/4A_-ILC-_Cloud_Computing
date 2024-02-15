@@ -8,6 +8,11 @@ app = Flask(__name__)
 resultats = {1 : 5}
 
 
+@app.route("/display", methods=['GET'])
+def get_result():
+	if request.method == 'GET':
+		return str((resultats.items()))
+     
 #addition
 @app.route("/api/add/<A>/<B>", methods=["GET", "POST"])
 def add(A,B):
