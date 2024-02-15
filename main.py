@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 import json 
 
+import redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+
 app = Flask(__name__)
 
 
@@ -21,6 +24,7 @@ def add(A,B):
         B = int(B)
         C = A + B 
         id = len(resultats) + 1
+        r.set(id, C) 
         resultats[id] = C
 
         return " a bien été ajouté au dictionnaire"
@@ -34,6 +38,8 @@ def subs(A,B):
         B = int(B)
         C = A - B 
         id = len(resultats) + 1
+        r.set(id, C) 
+
         resultats[id] = C
 
         return " a bien été ajouté au dictionnaire"
@@ -50,6 +56,8 @@ def div(A,B):
         C = A - B 
         id = len(resultats) + 1
         resultats[id] = C
+        r.set(id, C) 
+
 
         return " a bien été ajouté au dictionnaire"
     
@@ -62,6 +70,8 @@ def multi(A,B):
         C = A * B 
         id = len(resultats) + 1
         resultats[id] = C
+        r.set(id, C) 
+
 
         return " a bien été ajouté au dictionnaire"
 
