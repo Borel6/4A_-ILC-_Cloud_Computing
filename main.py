@@ -1,9 +1,4 @@
 from flask import Flask, render_template, request
-from datetime import datetime
-from datetime import timedelta
-import csv
-from io import StringIO
-
 import json 
 
 app = Flask(__name__)
@@ -14,7 +9,7 @@ resultats = {1 : 5}
 
 
 #addition
-@app.route("/add/<A>/<B>", methods=["GET", "POST"])
+@app.route("api/add/<A>/<B>", methods=["GET", "POST"])
 def add(A,B):
     if request.method == "GET":
 
@@ -26,7 +21,7 @@ def add(A,B):
 
 
 #soustraction
-@app.route("/subs/<A>/<B>", methods=["GET", "POST"])
+@app.route("api/subs/<A>/<B>", methods=["GET", "POST"])
 def subs(A,B):
     if request.method == "GET":
 
@@ -37,7 +32,7 @@ def subs(A,B):
         return " a bien été ajouté au dictionnaire"
     
 #division
-@app.route("/div/<A>/<B>", methods=["GET", "POST"])
+@app.route("api/div/<A>/<B>", methods=["GET", "POST"])
 def div(A,B):
     if request.method == "GET":
         if (B == 0) :
@@ -50,7 +45,7 @@ def div(A,B):
         return " a bien été ajouté au dictionnaire"
     
 #multiplication
-@app.route("/multi/<A>/<B>", methods=["GET", "POST"])
+@app.route("api/multi/<A>/<B>", methods=["GET", "POST"])
 def multi(A,B):
     if request.method == "GET":
 
