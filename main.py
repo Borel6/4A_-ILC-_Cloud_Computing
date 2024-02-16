@@ -18,10 +18,11 @@ app = Flask(__name__)
 
 
 
-#@app.route("/display", methods=['GET'])
-#def get_result():
-#	if request.method == 'GET':
-#		return str((resultats.items()))
+@app.route("/result/<res>", methods=["GET", "POST"])
+def get_result(res):
+	if request.method == 'GET':
+            r.get(res)
+            return res
      
 #addition
 @app.route("/api/add/<A>/<B>", methods=["GET", "POST"])
@@ -29,9 +30,7 @@ def add(A,B):
     if request.method == "GET":
         A = int(A)
         B = int(B)
-        C = A + B 
-        id = r.dbsize + 1
-       # r.set(id, C) 
+        id = r.dbsize() + 1
         id = "calc" + str(id)
         data = {
         "id": id,
@@ -59,10 +58,26 @@ def subs(A,B):
     if request.method == "GET":
         A = int(A)
         B = int(B)
-        C = A - B 
         id = r.dbsize() + 1
+        id = "calc" + str(id)
+        data = {
+        "id": id,
+        "message": {
+            "op": "subs",
+            "numA": A,
+            "numB": B
+            }
+            }
+        json_data = json.dumps(data)
+        
 
-        return " a bien été ajouté au dictionnaire"
+        channel.basic_publish(exchange='',
+                        routing_key='calculs',
+                      body=json_data)
+                      
+        print(" [x] Sent 'Hello World!'")
+
+        return id 
     
 #division
 @app.route("/api/div/<A>/<B>", methods=["GET", "POST"])
@@ -73,12 +88,26 @@ def div(A,B):
         if (B == 0) :
               return "division impossible"
 
-        C = A - B 
         id = r.dbsize() + 1
-        r.set(id, C) 
+        id = "calc" + str(id)
+        data = {
+        "id": id,
+        "message": {
+            "op": "multi",
+            "numA": A,
+            "numB": B
+            }
+            }
+        json_data = json.dumps(data)
+        
 
+        channel.basic_publish(exchange='',
+                        routing_key='calculs',
+                      body=json_data)
+                      
+        print(" [x] Sent 'Hello World!'")
 
-        return " a bien été ajouté au dictionnaire"
+        return id 
     
 #multiplication
 @app.route("/api/multi/<A>/<B>", methods=["GET", "POST"])
@@ -86,11 +115,25 @@ def multi(A,B):
     if request.method == "GET":
         A = int(A)
         B = int(B)
-        C = A * B 
         id = r.dbsize() + 1
-        r.set(id, C) 
+        id = "calc" + str(id)
+        data = {
+        "id": id,
+        "message": {
+            "op": "multi",
+            "numA": A,
+            "numB": B
+            }
+            }
+        json_data = json.dumps(data)
+        
 
+        channel.basic_publish(exchange='',
+                        routing_key='calculs',
+                      body=json_data)
+                      
+        print(" [x] Sent 'Hello World!'")
 
-        return " a bien été ajouté au dictionnaire"
+        return id 
 
 connection.close()

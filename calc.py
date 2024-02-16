@@ -22,6 +22,15 @@ def main() :
         if (operation == "add") :
             C = int(numA) + int(numB)
             r.set(id, C) 
+        if (operation == "subs") :
+            C = int(numA) - int(numB)
+            r.set(id, C) 
+        if (operation == "div") :
+            C = int(numA) / int(numB)
+            r.set(id, C) 
+        if (operation == "multi") :
+            C = int(numA) * int(numB)
+            r.set(id, C) 
 
         print(f" [x] Received {body}")
 
