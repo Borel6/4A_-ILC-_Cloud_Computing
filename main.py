@@ -30,7 +30,7 @@ def add(A,B):
     if request.method == "GET":
         A = int(A)
         B = int(B)
-        id = r.dbsize() + 1
+        id = r.dbsize()() + 1
         id = "calc" + str(id)
         data = {
         "id": id,
@@ -48,6 +48,7 @@ def add(A,B):
                       body=json_data)
                       
         print(" [x] Sent 'Hello World!'")
+        connection.close()
 
         return id 
 
@@ -128,12 +129,5 @@ def multi(A,B):
         json_data = json.dumps(data)
         
 
-        channel.basic_publish(exchange='',
-                        routing_key='calculs',
-                      body=json_data)
-                      
-        print(" [x] Sent 'Hello World!'")
+        return " a bien été ajouté au dictionnaire"
 
-        return id 
-
-connection.close()
