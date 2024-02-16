@@ -4,6 +4,7 @@ import json
 import redis
 r = redis.Redis(host='localhost', port=6379, db=0)
 
+
 app = Flask(__name__)
 
 
@@ -23,7 +24,7 @@ def add(A,B):
         A = int(A)
         B = int(B)
         C = A + B 
-        id = len(resultats) + 1
+        id = r.dbsize() + 1
         r.set(id, C) 
         resultats[id] = C
 
@@ -37,7 +38,7 @@ def subs(A,B):
         A = int(A)
         B = int(B)
         C = A - B 
-        id = len(resultats) + 1
+        id = r.dbsize() + 1
         r.set(id, C) 
 
         resultats[id] = C
@@ -54,7 +55,7 @@ def div(A,B):
               return "division impossible"
 
         C = A - B 
-        id = len(resultats) + 1
+        id = r.dbsize() + 1
         resultats[id] = C
         r.set(id, C) 
 
@@ -68,7 +69,7 @@ def multi(A,B):
         A = int(A)
         B = int(B)
         C = A * B 
-        id = len(resultats) + 1
+        id = r.dbsize() + 1
         resultats[id] = C
         r.set(id, C) 
 
