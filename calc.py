@@ -19,9 +19,9 @@ def main() :
         numB = message['message']['numB']
         id = message['id']
 
-        if (operation == "add") :
-            C = int(numA) + int(numB)
-            r.set(id, C) 
+        #if (operation == "add") :
+            #C = int(numA) + int(numB)
+            #r.set(id, C) 
         if (operation == "subs") :
             C = int(numA) - int(numB)
             r.set(id, C) 
