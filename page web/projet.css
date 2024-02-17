@@ -1,0 +1,114 @@
+/* Reset des styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Supprimer les marges par défaut du body */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Trois colonnes de largeur égale */
+    gap: 20px; /* Espacement entre les sections */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Styles de la section gauche */
+.left-section {
+    padding: 20px;
+    background-color: #f5f8fa;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Aligner les éléments de haut en bas */
+    justify-content: space-between; /* Répartir les éléments verticalement */
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 100px;
+}
+
+.sidebar-nav ul {
+    list-style-type: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav a {
+    color: #1da1f2;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-nav a i {
+    margin-right: 10px;
+}
+
+.profile {
+    margin-top: 20px;
+}
+
+.profile h2 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #1da1f2;
+}
+
+.profile p {
+    margin-bottom: 5px;
+}
+
+/* Styles de la section centrale */
+.middle-section {
+    padding: 20px;
+    background-color: #f0f0f0; /* Couleur de fond différente pour la section centrale */
+    height: 100vh; /* Remplir entièrement la hauteur de la fenêtre */
+}
+
+.tweets {
+    margin-bottom: 20px;
+}
+
+.tweet {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc; /* Placeholder color */
+    margin-right: 10px;
+}
+
+.tweet-content {
+    flex: 1;
+}
+
+.username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tweet-text {
+    color: #333;
+}
+
+/* Styles de la section droite */
+.right-section {
+    padding: 20px;
+    background-color: #f5f8fa;
+    height: 100vh; /* Remplir entièrement la hauteur de la fenêtre */
+}

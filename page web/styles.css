@@ -1,0 +1,82 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border-left: 3px solid #ff7f50;
+    border-right: 3px solid #ff7f50;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    padding: 20px;
+}
+
+.title {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #334e68;
+}
+
+.cloud-icon {
+    font-size: 5em;
+    color: #f98a8a;
+    margin-bottom: 30px;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+}
+
+.option {
+    display: block;
+    width: 250px;
+    height: 120px;
+    margin: 0 20px;
+    background-color: #6ccff6;
+    border: 2px solid #334e68;
+    border-radius: 20px;
+    line-height: 120px;
+    text-decoration: none;
+    color: #334e68;
+    font-size: 1.5em;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background-color: #4fb4d5;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.members {
+    margin-top: 50px;
+}
+
+.members-title {
+    font-size: 1.5em;
+    color: #334e68;
+    margin-bottom: 10px;
+}
+
+.member-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.member-list li {
+    font-size: 1.2em;
+    color: #334e68;
+    margin-bottom: 10px;
+}
