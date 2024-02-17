@@ -1,5 +1,5 @@
 function addToScreen(value) {
-    document.querySelector('.screen').innerText = value;
+    document.querySelector('.screen').innerText += value;
 }
 
 function clearScreen() {
@@ -7,25 +7,15 @@ function clearScreen() {
 }
 
 function calculate() {
+
     var expression = document.querySelector('.screen').innerText;
-    var operatorFound = false;
-    var operator;
-    
-    // Parcours l'expression pour rechercher un opérateur
-    for (var i = 0; i < expression.length; i++) {
-        if (expression[i] === '+' || expression[i] === '-' || expression[i] === '*' || expression[i] === '/') {
-            operator = expression[i];
-            operatorFound = true;
-            break;
-        }
-    }
-    
-    // Vérifie si un opérateur a été trouvé
-    if (!operatorFound) {
+
+     // Vérifie si une expression valide a été saisie
+     if (!expression.includes('+') && !expression.includes('-') && !expression.includes('*') && !expression.includes('/')) {
         alert('Veuillez entrer une expression valide.');
         return;
     }
-
+    var operator = expression.match(/[+\-*\/]/)[0]; // Récupère l'opérateur de l'expression
     var numbers = expression.split(operator); // Sépare les nombres à partir de l'opérateur
     var numA = parseFloat(numbers[0]); // Utilise parseFloat pour gérer les nombres décimaux
     var numB = parseFloat(numbers[1]);
