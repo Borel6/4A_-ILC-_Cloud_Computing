@@ -14,13 +14,12 @@ function signup() {
     .then(response => response.json())
     .then(data => {
         // Vérifiez la réponse de l'API Flask
-        if (data.success) {
-            // Affichez un message de succès ou redirigez vers la page de connexion, etc.
+        if (data.message=="Utilisateur enregistré avec succès") {
             alert("Inscription réussie. Vous pouvez maintenant vous connecter.");
             window.location.href = "index.html";  // Redirection vers la page de connexion
         } else {
             // Affichez un message d'erreur si l'inscription échoue
-            alert("Erreur lors de l'inscription: " + data.message);
+            alert("Nom d'utilisateur déjà pris veuillez en choisir un autre");
         }
     })
     .catch(error => {
