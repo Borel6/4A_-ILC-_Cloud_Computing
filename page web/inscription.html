@@ -1,0 +1,33 @@
+<!-- inscription.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Clone - Inscription</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="inscription.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="img/logo_X.png" alt="Logo Twitter">
+        </div>
+
+        <form id="signupForm" class="form">
+            <h2>Inscription à Twitter</h2>
+            <label for="newUsername">Nom d'utilisateur:</label>
+            <input type="text" id="newUsername" name="newUsername" required>
+
+            <label for="newPassword">Mot de passe:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+
+            <button type="button" onclick="signup()">S'inscrire</button>
+
+            <p>Vous avez déjà un compte ? <a href="index.html">Connectez-vous ici</a>.</p>
+        </form>
+    </div>
+
+</body>
+</html>
