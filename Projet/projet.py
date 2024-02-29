@@ -44,6 +44,25 @@ def login_user():
         return jsonify({"success": True, "message": "Connexion réussie"}), 200
     else:
         return jsonify({"success": False, "message": "Mot de passe incorrect"}), 401
+    
+@app.route('/tweet', methods=['POST'])
+def tweet():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        tweet_text = data.get('tweet_text')
+
+        # Générez un nouvel ID de tweet en incrémentant une variable dans Redis
+        tweet_id = redis_client.incr('tweet_id_counter')
+
+        # Stockez le tweet dans Redis avec la clé pseudo-id
+        tweet_key = f'{username}-tweet-{tweet_id}'
+        redis_client.set(tweet_key, tweet_text)
+
+        return jsonify({"success": True, "message": "Tweet enregistré avec succès"}), 201
+    except Exception as e:
+        print(f"Erreur lors de la gestion de la requête : {str(e)}")
+        return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

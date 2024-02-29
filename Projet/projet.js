@@ -10,3 +10,33 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- Ajoutez d'autres informations de profil si nécessaire -->
     `;
 });
+
+function sendTweet() {
+    const tweetText = document.getElementById('tweetText').value;
+
+    // Récupérer le pseudo depuis localStorage
+    const pseudo = localStorage.getItem('pseudo');
+
+    // Envoi du tweet au serveur Flask
+    fetch('/tweet', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: pseudo,
+            tweet_text: tweetText,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // Mettez à jour l'interface utilisateur avec le nouveau tweet si nécessaire
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi du tweet:', error);
+    });
+
+    // Réinitialisation du formulaire
+    document.getElementById('tweetForm').reset();
+}
