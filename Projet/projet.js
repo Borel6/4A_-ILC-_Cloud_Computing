@@ -9,7 +9,90 @@ document.addEventListener("DOMContentLoaded", function () {
         <p>Pseudo: ${pseudo}</p>
         <!-- Ajoutez d'autres informations de profil si nécessaire -->
     `;
+
+    displayTweet()
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function displayTweet(){
+   
+   fetch('http://127.0.0.1:5000/tweets')
+   .then(response => response.json())
+   .then(data => {
+       if (data.success) {
+           const tweets = data.tweets;
+           const tweetSection = document.querySelector('.tweets');
+           tweetSection.innerHTML = ''; // on efface les tweets existants
+
+           tweets.forEach(tweet => {
+               const tweetDiv = document.createElement('div');
+               tweetDiv.classList.add('tweet');
+
+               const profilePicDiv = document.createElement('div');
+               profilePicDiv.classList.add('profile-pic'); // pour la pdp
+               profilePicDiv.style.backgroundColor = '#ccc';
+
+               const tweetContentDiv = document.createElement('div');
+               tweetContentDiv.classList.add('tweet-content');
+
+               const usernameHeading = document.createElement('h3');
+               usernameHeading.classList.add('username');
+               usernameHeading.textContent = tweet.username;
+
+               const tweetTextParagraph = document.createElement('p');
+               tweetTextParagraph.classList.add('tweet-text');
+               tweetTextParagraph.textContent = tweet.tweet_text;
+
+               tweetContentDiv.appendChild(usernameHeading);
+               tweetContentDiv.appendChild(tweetTextParagraph);
+
+               tweetDiv.appendChild(profilePicDiv);
+               tweetDiv.appendChild(tweetContentDiv);
+
+               tweetSection.appendChild(tweetDiv); 
+               
+           });
+       }
+   })
+   .catch(error => {
+       console.error('Error fetching tweets:', error);
+   });
+}
+
 
 function sendTweet() {
     const tweetText = document.getElementById('tweetText').value;

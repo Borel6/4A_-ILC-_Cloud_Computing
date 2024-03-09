@@ -63,5 +63,30 @@ def tweet():
         print(f"Erreur lors de la gestion de la requête : {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
 
+
+@app.route('/tweets', methods=['GET'])  # New route to fetch all tweets
+def get_tweets():
+    try:
+        # on reccup les id des tweet
+        tweet_keys = redis_client.keys('tweet-*')
+
+        # on crée untableau de teet
+        tweets = []
+
+        # on boucle et on remplit le tableau 
+        for tweet_key in tweet_keys:
+            tweet_data = redis_client.hgetall(tweet_key)
+            tweet = {
+                'username': tweet_data[b'username'].decode(),
+                'tweet_text': tweet_data[b'tweet'].decode()
+            }
+            tweets.append(tweet)
+
+        return jsonify({"success": True, "tweets": tweets}), 200
+    except Exception as e:
+        print(f"Error fetching tweets: {str(e)}")
+        return jsonify({"success": False, "message": "Error fetching tweets"}), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
