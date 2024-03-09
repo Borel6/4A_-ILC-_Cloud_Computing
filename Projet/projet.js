@@ -156,3 +156,11 @@ function sendTweet() {
     // Réinitialisation du formulaire
     document.getElementById('tweetForm').reset();
 }
+
+function logout() {
+    // Clear localStorage (assuming you stored the user information there)
+    localStorage.clear();
+
+    // Redirect to index.html
+    window.location.href = 'index.html';
+}
