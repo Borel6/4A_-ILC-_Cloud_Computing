@@ -56,7 +56,7 @@ def tweet():
         tweet_key = f'tweet-{id_tweet}'
 
         redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text})
-        redis_client.sadd('{username}', tweet_key)
+        redis_client.sadd(username, tweet_key)
 
         return jsonify({"success": True, "message": "Tweet enregistré avec succès"}), 201
     except Exception as e:
