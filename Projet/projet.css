@@ -72,13 +72,17 @@ body {
 /* Styles de la section centrale */
 .middle-section {
     padding: 20px;
-    background-color: #f0f0f0; /* Couleur de fond différente pour la section centrale */
-    height: 100vh; /* Remplir entièrement la hauteur de la fenêtre */
+    background-color: #f0f0f0;
+    height: 100vh;
+    overflow-y: auto; /* Add overflow-y to enable vertical scrolling */
 }
 
 .tweets {
     margin-bottom: 20px;
+    max-height: calc(100vh - 100px); /* Adjust the max-height as needed */
+    overflow-y: auto; /* Add overflow-y to enable vertical scrolling */
 }
+
 
 .tweet {
     display: flex;
