@@ -8,25 +8,25 @@ redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route('/register', methods=['POST'])
 def register_user():
-    data = request.json  # Assurez-vous d'envoyer les données en tant que JSON depuis votre front-end
+    data = request.json  #on s'assure d'envoyer les données en tant que JSON depuis votre front-end
     username = data.get('username')
     password = data.get('password')
 
-    # Vérifiez si le nom d'utilisateur est déjà pris
+    # Vérifie si le nom d'utilisateur est déjà pris
     if redis_client.sismember('usernames', username):
         return jsonify({"message": "Nom d'utilisateur déjà pris. Veuillez en choisir un autre."}), 400
 
-    # Enregistrez les informations de l'utilisateur dans Redis
+    # Enregistre les informations de l'utilisateur dans Redis
     user_id = redis_client.incr('user_id_counter')
     user_key = f'id-{username}'
-    redis_client.hmset(user_key, {'id': user_id, 'username': username, 'password': password})
+    redis_client.hmset(user_key, {'username': username, 'password': password})
     redis_client.sadd('usernames', username)
 
     return jsonify({"message": "Utilisateur enregistré avec succès"}), 201
 
 @app.route('/login', methods=['POST'])
 def login_user():
-    data = request.json  # Assurez-vous d'envoyer les données en tant que JSON depuis votre front-end
+    data = request.json  #on s'assure d'envoyer les données en tant que JSON depuis votre front-end
     username = data.get('username')
     password = data.get('password')
 
@@ -51,13 +51,12 @@ def tweet():
         data = request.get_json()
         username = data.get('username')
         tweet_text = data.get('tweet_text')
+        
+        id_tweet = redis_client.incr('tweet_id_counter')
+        tweet_key = f'tweet-{id_tweet}'
 
-        # Générez un nouvel ID de tweet en incrémentant une variable dans Redis
-        tweet_id = redis_client.incr('tweet_id_counter')
-
-        # Stockez le tweet dans Redis avec la clé pseudo-id
-        tweet_key = f'{username}-tweet-{tweet_id}'
-        redis_client.set(tweet_key, tweet_text)
+        redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text})
+        redis_client.sadd('{username}', tweet_key)
 
         return jsonify({"success": True, "message": "Tweet enregistré avec succès"}), 201
     except Exception as e:
