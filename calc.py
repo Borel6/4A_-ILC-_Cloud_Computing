@@ -2,7 +2,8 @@
 import pika, sys, os 
 import json
 import redis
-r = redis.Redis(host='localhost', port=6379, db=0)
+from main import r
+#r = redis.Redis(host='localhost', port=6379, db=0)
 
 def main() :
 
@@ -19,9 +20,12 @@ def main() :
         numB = message['message']['numB']
         id = message['id']
 
-        #if (operation == "add") :
-            #C = int(numA) + int(numB)
-            #r.set(id, C) 
+        if (operation == "add") :
+            C = int(numA) + int(numB)
+            print(id)
+            r.set(id, C)
+            print(r.dbsize()) 
+            print(r.get(id)) 
         if (operation == "subs") :
             C = int(numA) - int(numB)
             r.set(id, C) 

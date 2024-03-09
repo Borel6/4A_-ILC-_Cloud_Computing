@@ -13,7 +13,7 @@ channel.queue_declare(queue='calculs')
 
 
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='localhost', port=6379)
 app = Flask(__name__)
 
 
