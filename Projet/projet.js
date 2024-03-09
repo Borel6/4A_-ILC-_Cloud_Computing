@@ -30,8 +30,41 @@ function sendTweet() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        // Mettez à jour l'interface utilisateur avec le nouveau tweet si nécessaire
+
+        if (data.message== "Tweet enregistré avec succès") {
+
+            const tweetSection = document.querySelector('.tweets');
+
+            const tweetDiv = document.createElement('div');
+            tweetDiv.classList.add('tweet');
+
+            const profilePicDiv = document.createElement('div');
+            profilePicDiv.classList.add('profile-pic');
+            
+            
+            profilePicDiv.style.backgroundColor = '#ccc'; 
+
+            const tweetContentDiv = document.createElement('div');
+            tweetContentDiv.classList.add('tweet-content');
+
+            const usernameHeading = document.createElement('h3');
+            usernameHeading.classList.add('username');
+            usernameHeading.textContent = pseudo;
+
+            const tweetTextParagraph = document.createElement('p');
+            tweetTextParagraph.classList.add('tweet-text');
+            tweetTextParagraph.textContent = tweetText;
+
+            tweetContentDiv.appendChild(usernameHeading);
+            tweetContentDiv.appendChild(tweetTextParagraph);
+
+            tweetDiv.appendChild(profilePicDiv);
+            tweetDiv.appendChild(tweetContentDiv);
+
+            tweetSection.prepend(tweetDiv); 
+        
+        }
+
     })
     .catch(error => {
         console.error('Erreur lors de l\'envoi du tweet:', error);
