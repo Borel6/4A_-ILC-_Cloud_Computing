@@ -85,8 +85,53 @@ def get_tweets():
         return jsonify({"success": True, "tweets": tweets}), 200
     except Exception as e:
         print(f"Error fetching tweets: {str(e)}")
-        return jsonify({"success": False, "message": "Error fetching tweets"}), 500
+        return jsonify({"success": False, "message": "Erreur d'affichage"}), 500
 
+@app.route('/tweets/<username>', methods=['GET'])
+def get_user_tweets(username):
+    try:
+        # on veifie si l'user existe
+        if not redis_client.exists(f'id-{username}'):
+            return jsonify({"success": False, "message": "utilisateur innexistant"}), 404
+
+        # on reccup tous ses tweets
+        tweet_keys = redis_client.smembers(username)
+        tweets = []
+
+        # onremplit le tableau de tweets et on le renvoie au compte.js
+        for tweet_key in tweet_keys:
+            tweet_data = redis_client.hgetall(tweet_key)
+            tweet = {
+                'username': tweet_data[b'username'].decode(),
+                'tweet_text': tweet_data[b'tweet'].decode()
+            }
+            tweets.append(tweet)
+
+        return jsonify({"success": True, "tweets": tweets}), 200
+    except Exception as e:
+        print(f"Error fetching user tweets: {str(e)}")
+        return jsonify({"success": False, "message": "Error d'affichage"}), 500
+
+
+@app.route('/retweets', methods=['POST'])
+def retweet():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        retweeter = data.get('Retweeter')
+        tweet_text = data.get('tweet_text')
+        
+        id_tweet = redis_client.incr('tweet_id_counter')
+        tweet_key = f'tweet-{id_tweet}'
+
+        # on crée le retweet de manière à ce qu'il soit traité comme un tweet mais l'utilisateur soit celui qui a retweeté
+        redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text, 'retweeter': retweeter})
+        redis_client.sadd(username, tweet_key)
+
+        return jsonify({"success": True, "message": "reTweet enregistré avec succès"}), 201
+    except Exception as e:
+        print(f"Erreur lors de la gestion de la requête : {str(e)}")
+        return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

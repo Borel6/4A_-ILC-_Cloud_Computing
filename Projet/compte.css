@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Alignement vertical du contenu */
+    align-items: center; /* Centrage horizontal du contenu */
+    background-color: #f0f0f0; /* Couleur d'arrière-plan */
+}
+
+header {
+    background-color: #333; /* Couleur de l'en-tête */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%; /* Largeur maximale */
+    box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur */
+    margin-bottom: 20px; /* Marge inférieure */
+    margin: 0 auto; /* Centrage horizontal */
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+main {
+    margin-top: 20px;
+    width: 100%; /* Largeur maximale */
+    box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur */
+    margin-bottom: 20px; /* Marge inférieure */
+    margin: 0 auto; /* Centrage horizontal */
+}
+
+#profile, #tweets {
+    width: 60%; /* Largeur des sections */
+    text-align: center; /* Centrage du contenu */
+    background-color: white; /* Couleur de fond */
+    padding: 20px; /* Espacement interne */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre */
+    margin: 0 auto; /* Centrage horizontal */
+}
+
+#profile {
+    margin-bottom: 10px; /* Petit espace entre les sections */
+}
+
+#tweets {
+    margin-top: 10px; /* Petit espace entre les sections */
+}
+
+h2 {
+    border-bottom: 2px solid #333; /* Bordure inférieure */
+    padding-bottom: 5px;
+    margin-bottom: 20px; /* Marge inférieure */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#pseudoValue {
+    font-weight: bold;
+    color: #333; /* Couleur du texte */
+}
+
+#descriptionValue {
+    color: #555; /* Couleur du texte */
+}
+
+
+
+.pdp {
+    margin-bottom: 20px; /* Ajouter un espacement en bas */
+}
+
+.pdp img {
+    width: 150px; /* Largeur de l'image */
+    height: 150px; /* Hauteur de l'image */
+    border-radius: 50%; /* Bordure arrondie pour créer un cercle */
+    object-fit: cover; /* Ajuster la taille de l'image tout en conservant les proportions */
+    object-position: center; /* Centrer l'image dans le cercle */
+    margin-bottom: 10px; /* Ajouter un espacement en bas de l'image */
+}
+
+.pdp p {
+    margin-bottom: 5px; /* Ajouter un espacement en bas des paragraphes */
+}
+
+#descriptionValue {
+    font-style: italic; /* Mettre la description en italique */
+    color: #666; /* Couleur de texte plus claire */
+}

@@ -12,7 +12,7 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Trois colonnes de largeur égale */
+    grid-template-columns: 1fr 2fr 1fr; /* Trois colonnes de largeur égale */
     gap: 20px; /* Espacement entre les sections */
     max-width: 1200px;
     margin: 0 auto;
@@ -55,9 +55,45 @@ body {
     margin-right: 10px;
 }
 
-.profile {
-    margin-top: 20px;
+.tweet {
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+    margin-bottom: 20px;
 }
+
+.profile-pic {
+    flex-shrink: 0; /* Prevent profile pic from shrinking */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc; /* Placeholder color */
+    margin-right: 10px;
+    overflow: hidden; /* Prevent overflow content from spilling out */
+    display: flex; /* Utiliser flexbox pour centrer l'image */
+    justify-content: center; /* Centrer horizontalement */
+}
+.profile-picture {
+    width: 150px; /* Définir la largeur du cercle */
+    height: 150px; /* Définir la hauteur du cercle */
+    border-radius: 50%; /* Créer un cercle en utilisant le rayon de bordure */
+    overflow: hidden; /* Cacher les parties de l'image qui dépassent du cercle */
+    display: flex; /* Utiliser flexbox pour centrer l'image */
+    justify-content: center; /* Centrer horizontalement */
+   
+}
+
+.profile-pic img {
+    max-width: auto; /* Ajuster la largeur de l'image pour s'adapter au cercle */
+    max-height: 100%; /* Ajuster la hauteur de l'image pour s'adapter au cercle */
+    border-radius: 75%; /* Assurer que l'image reste un cercle */
+}
+
+.tweet-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Align content vertically */
+}
+
 
 .profile h2 {
     margin-bottom: 10px;
@@ -80,7 +116,6 @@ body {
 .tweets {
     margin-bottom: 20px;
     max-height: calc(100vh - 100px); /* Adjust the max-height as needed */
-    overflow-y: auto; /* Add overflow-y to enable vertical scrolling */
 }
 
 
@@ -89,26 +124,18 @@ body {
     margin-bottom: 20px;
 }
 
-.profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ccc; /* Placeholder color */
-    margin-right: 10px;
-}
-
-.tweet-content {
-    flex: 1;
-}
 
 .username {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
+
 .tweet-text {
     color: #333;
+    word-wrap: break-word; /* Allow long text to wrap */
 }
+
 
 /* Styles de la section droite */
 .right-section {
@@ -130,5 +157,60 @@ body {
 }
 
 .logout-button:hover {
-    background-color: #0e71a9;
+    background-color:  #1da1f2;
+}
+
+.retweet-button {
+    background-color: transparent;
+    border: none;
+    color: #1da1f2;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.retweet-button:hover {
+    color:  #1da1f2;
+}
+
+.retweet-button i {
+    margin-right: 5px; /* Add a small space between the icon and the text */
+}
+
+.retweet-button.retweeted {
+    color: black ;
+  
+}
+
+.tweet-form {
+    margin-bottom: 20px; /* Ajoute un espace en bas du formulaire */
+}
+
+#tweetForm {
+    display: flex; /* Utiliser flexbox pour aligner les éléments horizontalement */
+    flex-direction: column; /* Aligner les éléments verticalement */
+    align-items: center; /* Centrer les éléments horizontalement */
+}
+
+#tweetText {
+    width: 100%; /* Largeur du textarea à 100% */
+    height: 100px; /* Hauteur du textarea */
+    margin-bottom: 10px; /* Ajoute un espace en bas du textarea */
+    padding: 10px; /* Ajoute un espace à l'intérieur du textarea */
+    resize: none; /* Empêche le redimensionnement du textarea */
+    border: 1px solid #ccc; /* Ajoute une bordure autour du textarea */
+    border-radius: 5px; /* Ajoute un arrondi aux coins */
+}
+
+#tweetForm button {
+    padding: 10px 20px; /* Ajoute un espace à l'intérieur du bouton */
+    background-color:  #1da1f2; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border: none; /* Supprime la bordure du bouton */
+    border-radius: 5px; /* Ajoute un arrondi aux coins */
+    cursor: pointer; /* Change le curseur en main au survol */
+}
+
+#tweetForm button:hover {
+    background-color:  #1da1f2; /* Couleur de fond du bouton au survol */
 }
