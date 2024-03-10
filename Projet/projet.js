@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Récupérer le pseudo depuis localStorage
+
+    
+
+    // on récupère le pseudo depuis localStorage
     const pseudo = localStorage.getItem('pseudo');
 
     // Remplir la section du profil avec le pseudo
@@ -13,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     displayTweet(pseudo)
+    displayHashtags()
 });
 
 
@@ -30,6 +34,9 @@ function displayTweet(pseudo){
                const tweetDiv = document.createElement('div');
                tweetDiv.classList.add('tweet');
 
+                            
+
+
                const profilePicDiv = document.createElement('div');
                profilePicDiv.classList.add('profile-pic'); // pour la pdp
 
@@ -44,6 +51,9 @@ function displayTweet(pseudo){
 
                 // Ajouter l'image à la division de la photo de profil
                 profilePicDiv.appendChild(profilePicImg);
+
+
+                
                
                 
 
@@ -58,7 +68,22 @@ function displayTweet(pseudo){
                tweetTextParagraph.classList.add('tweet-text');
                tweetTextParagraph.textContent = tweet.tweet_text;
 
+
+
+               
+
                // partie retweet
+
+                // on précise si c'est un retweet 
+                if (tweet.retweeter) {
+                    const retweetInfo = document.createElement('p');
+                    retweetInfo.textContent = `Retweeté par: @${tweet.retweeter}`;
+                    retweetInfo.classList.add('retweet-info'); // Ajoutez la classe pour le style CSS
+                    tweetContentDiv.appendChild(retweetInfo); // Ajoutez retweetInfo à tweetContentDiv
+                }
+
+
+
                const retweetButton = document.createElement('button');
                     retweetButton.innerHTML = '<i class="fas fa-retweet"></i> Retweet';
                     retweetButton.classList.add('retweet-button');
@@ -67,10 +92,11 @@ function displayTweet(pseudo){
 
                     //on verifie si le boutton est deja cliqué
                     const isRetweeted = localStorage.getItem(`retweet-${tweet.tweet_text}`);
-                    console.log(isRetweeted);
+                    
                     if (isRetweeted) {
                         
-                        retweetButton.classList.add('retweeted');
+                        
+                        retweetButton.classList.add('retweeted');// on marque le boutton
                     }
 
                     retweetButton.addEventListener('click', function() {
@@ -81,16 +107,12 @@ function displayTweet(pseudo){
                tweetContentDiv.appendChild(usernameHeading);
                tweetContentDiv.appendChild(tweetTextParagraph);
                tweetContentDiv.appendChild(retweetButton);
+
+               
                tweetDiv.appendChild(profilePicDiv);
                tweetDiv.appendChild(tweetContentDiv);
 
-               //on vérifie si le tweet est un retweet
-                if (tweet.retweeter) {
-                    const retweetInfo = document.createElement('p');
-                    retweetInfo.textContent = `Retweeté par: ${tweet.retweeter}`;
-                    tweetDiv.insertBefore(retweetInfo, profilePicDiv); 
-                }
-
+           
                tweetSection.appendChild(tweetDiv); 
 
                
@@ -106,6 +128,13 @@ function displayTweet(pseudo){
 
 function sendTweet() {
     const tweetText = document.getElementById('tweetText').value;
+
+
+    // on Vérifie si le champ de texte n'est pas vide
+    if (!tweetText.trim()) {
+        alert('Veuillez entrer votre tweet avant de l\'envoyer.');
+        return; // on Arrête l'exécution de la fonction si le champ est vide
+    }
 
     // Récupérer le pseudo depuis localStorage
     const pseudo = localStorage.getItem('pseudo');
@@ -124,6 +153,7 @@ function sendTweet() {
     .then(response => response.json())
     .then(data => {
 
+        console.log(data.hashtag)
         if (data.message== "Tweet enregistré avec succès") {
 
             const tweetSection = document.querySelector('.tweets');
@@ -205,3 +235,33 @@ function retweetTweet(username, Retweeter, tweet,retweetButton) {
     });
 }
 }
+
+function displayHashtags() {
+    fetch('http://127.0.0.1:5000/hashtags')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const hashtags = data.hashtags;
+                const trendingSection = document.querySelector('.hashtag-section');
+                const uniqueHashtags = new Set(hashtags); // Utiliser un ensemble pour stocker des hashtags uniques
+
+                trendingSection.innerHTML = ''; // Effacer le contenu existant
+
+                uniqueHashtags.forEach(hashtag => {
+                    const hashtagElement = document.createElement('div');
+                    hashtagElement.classList.add('hashtag');
+                    hashtagElement.textContent = hashtag;
+                    trendingSection.appendChild(hashtagElement);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching hashtags:', error);
+        });
+}
+
+
+
+
+
+

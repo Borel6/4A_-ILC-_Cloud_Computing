@@ -17,7 +17,7 @@ def register_user():
         return jsonify({"message": "Nom d'utilisateur déjà pris. Veuillez en choisir un autre."}), 400
 
     # Enregistre les informations de l'utilisateur dans Redis
-    user_id = redis_client.incr('user_id_counter')
+    
     user_key = f'id-{username}'
     redis_client.hmset(user_key, {'username': username, 'password': password})
     redis_client.sadd('usernames', username)
@@ -51,6 +51,17 @@ def tweet():
         data = request.get_json()
         username = data.get('username')
         tweet_text = data.get('tweet_text')
+
+
+        # on extrait le hashtag
+        hashtags = [word for word in tweet_text.split() if word.startswith('#')]
+        # on verifie si il y a des hashtags
+        if hashtags:
+            # Store each hashtag in Redis
+            for hashtag in hashtags:
+                hashtag_key = redis_client.incr('hashtag_id_counter')
+                hashtag_key = f'hashtag-{hashtag_key}'
+                redis_client.set(hashtag_key, hashtag)
         
         id_tweet = redis_client.incr('tweet_id_counter')
         tweet_key = f'tweet-{id_tweet}'
@@ -58,34 +69,38 @@ def tweet():
         redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text})
         redis_client.sadd(username, tweet_key)
 
-        return jsonify({"success": True, "message": "Tweet enregistré avec succès"}), 201
+        return jsonify({"success": True, "message": "Tweet enregistré avec succès","hashtag": hashtag}), 201
     except Exception as e:
         print(f"Erreur lors de la gestion de la requête : {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
 
 
-@app.route('/tweets', methods=['GET'])  # New route to fetch all tweets
+@app.route('/tweets', methods=['GET'])
 def get_tweets():
     try:
-        # on reccup les id des tweet
+        # on récupère les clés des tweets et retweets
         tweet_keys = redis_client.keys('tweet-*')
 
-        # on crée untableau de teet
+        # on crée un tableau de tweets
         tweets = []
 
-        # on boucle et on remplit le tableau 
+        # on boucle et on remplit le tableau avec les tweets et les retweets
         for tweet_key in tweet_keys:
             tweet_data = redis_client.hgetall(tweet_key)
             tweet = {
                 'username': tweet_data[b'username'].decode(),
                 'tweet_text': tweet_data[b'tweet'].decode()
             }
+            # Si le tweet a un champ 'retweeter' alors c'est un retweet donc on l'add
+            if b'retweeter' in tweet_data:
+                tweet['retweeter'] = tweet_data[b'retweeter'].decode()
             tweets.append(tweet)
 
         return jsonify({"success": True, "tweets": tweets}), 200
     except Exception as e:
         print(f"Error fetching tweets: {str(e)}")
         return jsonify({"success": False, "message": "Erreur d'affichage"}), 500
+
 
 @app.route('/tweets/<username>', methods=['GET'])
 def get_user_tweets(username):
@@ -124,14 +139,34 @@ def retweet():
         id_tweet = redis_client.incr('tweet_id_counter')
         tweet_key = f'tweet-{id_tweet}'
 
-        # on crée le retweet de manière à ce qu'il soit traité comme un tweet mais l'utilisateur soit celui qui a retweeté
+        # on crée le retweet de manière à ce qu'il soit traité 
         redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text, 'retweeter': retweeter})
-        redis_client.sadd(username, tweet_key)
+        redis_client.sadd(retweeter, tweet_key)
 
         return jsonify({"success": True, "message": "reTweet enregistré avec succès"}), 201
     except Exception as e:
         print(f"Erreur lors de la gestion de la requête : {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
+
+
+    
+@app.route('/hashtags', methods=['GET'])
+def get_hashtags():
+    try:
+        # Récupérer tous les hashtags stockés dans Redis
+        hashtag_keys = redis_client.keys('hashtag-*')
+
+        # Créer un ensemble pour stocker des hashtags uniques
+        hashtags = set()
+
+        for hashtag_key in hashtag_keys:
+            hashtag = redis_client.get(hashtag_key).decode()
+            hashtags.add(hashtag)
+
+        return jsonify({"success": True, "hashtags": list(hashtags)}), 200
+    except Exception as e:
+        print(f"Error fetching hashtags: {str(e)}")
+        return jsonify({"success": False, "message": "Erreur lors de la récupération des hashtags"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
