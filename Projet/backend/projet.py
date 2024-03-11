@@ -1,10 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import redis
+import initialize
+
+
 
 app = Flask(__name__)
 CORS(app)
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+initialize.load_default_data()
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -197,7 +202,10 @@ def get_tweets_by_hashtag(hashtag):
     except Exception as e:
         print(f"Error fetching tweets by hashtag: {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la récupération des tweets par hashtag"}), 500
-    
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

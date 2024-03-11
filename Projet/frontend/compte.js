@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     profileSection.innerHTML = `
     <h2>Profil</h2>
     <div class = pdp>
-        <img src="/projet/img/${pseudo}.webp" alt="Avatar" >
+        <img src="/projet/frontend/img/${pseudo}.webp" alt="Avatar" >
         <p>Pseudo: ${pseudo}</p>
         <p >Description: <span id="descriptionValue">Description: cette description est definie par défaut pour tous les utilisateurs <br> Messi is hte GOAT</span></p>
     

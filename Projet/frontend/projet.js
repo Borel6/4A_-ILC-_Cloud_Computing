@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     profileSection.innerHTML = `
         <p>Pseudo: ${pseudo}</p>
         <div class="profile-picture">
-            <img src="/projet/img/${pseudo}.webp" alt="Photo de profil">
+            <img src="/projet/frontend/img/${pseudo}.webp" alt="Photo de profil">
         </div>
     `;
 
@@ -48,7 +48,7 @@ function displayTweet(pseudo){
 
                 const profilePicImg = document.createElement('img');
                 // on définit l'attribut src de l'image en utilisant le chemin vers l'image
-                profilePicImg.src = `/projet/img/${tweet.username}.webp`;
+                profilePicImg.src = `/projet/frontend/img/${tweet.username}.webp`;
                 // on definit l'attribut alt de l'image 
                 profilePicImg.alt = `Photo de profil de ${tweet.username}`;
                 // on ajoute la classe pour le style CSS
@@ -294,7 +294,7 @@ function displayByHashtags(hashtag) {
 
                 const profilePicImg = document.createElement('img');
                 // on définit l'attribut src de l'image en utilisant le chemin vers l'image
-                profilePicImg.src = `/projet/img/${tweet.username}.webp`;
+                profilePicImg.src = `/projet/frontend/img/${tweet.username}.webp`;
                 // on definit l'attribut alt de l'image 
                 profilePicImg.alt = `Photo de profil de ${tweet.username}`;
                 // on ajoute la classe pour le style CSS
