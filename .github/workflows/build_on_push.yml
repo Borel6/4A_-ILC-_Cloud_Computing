@@ -22,4 +22,4 @@ jobs:
     - name: Installation de Flask_cors       
       run: pip install flask_cors
     - name: Construction de l'application
-      run: python -m py_compile Projet/projet.py
+      run: python -m py_compile Projet/backend/projet.py
