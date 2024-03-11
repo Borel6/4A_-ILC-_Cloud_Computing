@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    // Ajout d'un gestionnaire d'événements sur l'icône de l'acceuil
+    const accueilLink = document.getElementById('accueil-link');
+    accueilLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Pour empêcher le comportement par défaut du lien
+        displayTweet(); // Appeler la fonction displayTweets lorsque l'icône de la maison est cliquée
+    });
     
-
     // on récupère le pseudo depuis localStorage
     const pseudo = localStorage.getItem('pseudo');
 
@@ -153,7 +158,7 @@ function sendTweet() {
     .then(response => response.json())
     .then(data => {
 
-        console.log(data.hashtag)
+        console.log(data.tweet);
         if (data.message== "Tweet enregistré avec succès") {
 
             const tweetSection = document.querySelector('.tweets');
@@ -243,7 +248,7 @@ function displayHashtags() {
             if (data.success) {
                 const hashtags = data.hashtags;
                 const trendingSection = document.querySelector('.hashtag-section');
-                const uniqueHashtags = new Set(hashtags); // Utiliser un ensemble pour stocker des hashtags uniques
+                const uniqueHashtags = new Set(hashtags); // Utilise un ensemble sans doublon pour stocker des hashtags uniques
 
                 trendingSection.innerHTML = ''; // Effacer le contenu existant
 
@@ -252,6 +257,72 @@ function displayHashtags() {
                     hashtagElement.classList.add('hashtag');
                     hashtagElement.textContent = hashtag;
                     trendingSection.appendChild(hashtagElement);
+
+
+                    // Ajoute un événement de clic à chaque hashtag
+                     hashtagElement.addEventListener('click', function() {
+                        
+                          displayByHashtags(hashtag); // Appele de la fonction displayByHashtags avec le hashtag cliqué
+                     });
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching hashtags:', error);
+        });
+}
+
+
+function displayByHashtags(hashtag) {
+    
+    fetch(`http://127.0.0.1:5000/displayTweetsByHashtag/${hashtag}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                
+            const tweets = data.tweets;
+            const tweetSection = document.querySelector('.tweets');
+            tweetSection.innerHTML = ''; // on efface les tweets existants
+            console.log(tweets);
+            tweets.forEach(tweet => {
+               const tweetDiv = document.createElement('div');
+               tweetDiv.classList.add('tweet');
+
+               const profilePicDiv = document.createElement('div');
+               profilePicDiv.classList.add('profile-pic'); // pour la pdp
+
+
+                const profilePicImg = document.createElement('img');
+                // on définit l'attribut src de l'image en utilisant le chemin vers l'image
+                profilePicImg.src = `/projet/img/${tweet.username}.webp`;
+                // on definit l'attribut alt de l'image 
+                profilePicImg.alt = `Photo de profil de ${tweet.username}`;
+                // on ajoute la classe pour le style CSS
+                profilePicImg.classList.add('profile-pic-img');
+
+                // Ajouter l'image à la division de la photo de profil
+                profilePicDiv.appendChild(profilePicImg);
+                
+
+               const tweetContentDiv = document.createElement('div');
+               tweetContentDiv.classList.add('tweet-content');
+
+               const usernameHeading = document.createElement('h3');
+               usernameHeading.classList.add('username');
+               usernameHeading.textContent = tweet.username;
+
+               const tweetTextParagraph = document.createElement('p');
+               tweetTextParagraph.classList.add('tweet-text');
+               tweetTextParagraph.textContent = tweet.tweet_text;
+     
+               tweetContentDiv.appendChild(usernameHeading);
+               tweetContentDiv.appendChild(tweetTextParagraph);
+               
+               tweetDiv.appendChild(profilePicDiv);
+               tweetDiv.appendChild(tweetContentDiv);
+
+           
+               tweetSection.appendChild(tweetDiv); 
                 });
             }
         })

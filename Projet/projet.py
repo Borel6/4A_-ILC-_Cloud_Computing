@@ -54,7 +54,7 @@ def tweet():
 
 
         # on extrait le hashtag
-        hashtags = [word for word in tweet_text.split() if word.startswith('#')]
+        hashtags = [word[1:] for word in tweet_text.split() if word.startswith('#')]
         # on verifie si il y a des hashtags
         if hashtags:
             # Store each hashtag in Redis
@@ -69,7 +69,7 @@ def tweet():
         redis_client.hmset(tweet_key, {'username': username, 'tweet': tweet_text})
         redis_client.sadd(username, tweet_key)
 
-        return jsonify({"success": True, "message": "Tweet enregistré avec succès","hashtag": hashtag}), 201
+        return jsonify({"success": True, "message": "Tweet enregistré avec succès","tweet":tweet_text}), 201
     except Exception as e:
         print(f"Erreur lors de la gestion de la requête : {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la gestion de la requête"}), 500
@@ -168,5 +168,37 @@ def get_hashtags():
         print(f"Error fetching hashtags: {str(e)}")
         return jsonify({"success": False, "message": "Erreur lors de la récupération des hashtags"}), 500
 
+
+
+
+@app.route('/displayTweetsByHashtag/<hashtag>', methods=['GET'])
+def get_tweets_by_hashtag(hashtag):
+    try:
+        # Récupére tous les tweets
+        tweet_keys = redis_client.keys('tweet-*')
+
+        #  une liste pour stocker les tweets contenant le hashtag spécifique
+        tweets_with_hashtag = []
+
+        # Parcourir tous les tweets et vérifier s'ils contiennent le hashtag spécifique
+        for tweet_key in tweet_keys:
+            tweet_data = redis_client.hgetall(tweet_key)
+            tweet_text = tweet_data[b'tweet'].decode()
+
+            # Vérifier si le tweet contient le hashtag spécifique
+            if f'#{hashtag}' in tweet_text:
+                tweet = {
+                    'username': tweet_data[b'username'].decode(),
+                    'tweet_text': tweet_text
+                }
+                tweets_with_hashtag.append(tweet)
+
+        return jsonify({"success": True, "tweets":tweets_with_hashtag }), 200
+    except Exception as e:
+        print(f"Error fetching tweets by hashtag: {str(e)}")
+        return jsonify({"success": False, "message": "Erreur lors de la récupération des tweets par hashtag"}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
+
+

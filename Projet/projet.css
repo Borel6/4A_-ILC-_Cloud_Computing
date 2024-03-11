@@ -249,15 +249,27 @@ body {
     border-radius: 20px; /* Ajoute une légère bordure arrondie */
     background-color: #f0f0f0; /* Ajoute une couleur de fond légère */
     color: #1da1f2;
+    font-weight: bold; /* Met le texte en gras */
+
 }
 
 .hashtag::before {
-    color: #555; /* Couleur du dièse */
+    content: "#"; /* Ajoute un dièse avant chaque hashtag */
+    color: #1da1f2; /* Couleur du dièse */
     margin-right: 4px; /* Ajoute un peu d'espace entre le dièse et le texte du hashtag */
+    
 }
 
 .hashtag:hover {
     cursor: pointer; /* Change le curseur en main lorsque survolé */
     color: #007bff; /* Change la couleur du texte lors du survol */
     background-color: #eaeaea; /* Change la couleur de fond lors du survol */
+}
+
+
+/* Sélectionne l'icône de profil */
+.fa-user {
+    color: #1da1f2; /* Couleur bleue */
+    font-size: 1.5em; /* Taille légèrement augmentée */
+
 }
