@@ -1,0 +1,24 @@
+name: Build_on_push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8 
+    - name: Installation de Flask
+      run: pip install Flask  
+      run: pip install flask_cors
+    - name: Construction de l'application
+      run: python -m py_compile Projet/projet.py
