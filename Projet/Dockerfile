@@ -4,3 +4,4 @@ WORKDIR /appDocker
 RUN pip install Flask
 
 CMD ["python", "projet.py"]
+
