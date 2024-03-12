@@ -92,6 +92,3 @@ Cette API simple a été développée en utilisant Flask et Redis pour permettre
   - 500 Internal Server Error: Erreur lors de la récupération des tweets par hashtag.
 - **Type de données stockées dans Redis :** `hmset` (Hash), clé (`tweet-<id>`), valeurs (`{'username': username, 'tweet': tweet_text}`)
 
-## Statuts actions
-![push-action](https://github.com/Borel6/4A_-ILC-_Cloud_Computing/actions/workflows/build_on_push.yml/badge.svg)
-![push-action](https://github.com/Borel6/4A_-ILC-_Cloud_Computing/actions/workflows/build_img.yml/badge.svg)
