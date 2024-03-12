@@ -1,10 +1,10 @@
 
 # 4A_ILC_Projet_Cloud
-### Membres du projet
+## Membres du projet
 - BANFOU IVAN CHRISTOPHER 
 - BOREL STYVE TANKEU
-### Spécialité
-### ILC
+## Spécialité
+## ILC
 ![TEASER _HOMELANDER](https://github.com/ChristopherBanfou/4A_ILC_Projet_DevOps/assets/122366847/db8fce3d-15a2-4cb7-8f07-1245b96d7868)
 
 
