@@ -5,8 +5,7 @@ redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def load_default_data():
 
-    #on vide la base de donnée
-    redis_client.flushdb()
+    
 
     # Ajout d'utilisateurs par défaut
     users = [
@@ -21,7 +20,7 @@ def load_default_data():
 
     # Ajout de tweets par défaut
     tweets = [
-        {'username': 'jerom', 'tweet_text': 'je suis un gros #BG barbu'},
+        {'username': 'jerome', 'tweet_text': 'je suis un gros #BG barbu'},
         {'username': 'beyonder', 'tweet_text': 'vous attendez quoi pour regarder The Boys'},
         {'username': 'supremeBeyonder', 'tweet_text': 'un mec a dit hier #BreakingBad est suroté LOL'},
         {'username': 'beyonder', 'tweet_text': 'vous benchez combien vous ?'},

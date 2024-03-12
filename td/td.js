@@ -42,6 +42,7 @@ function calculate() {
             fetch('http://127.0.0.1:5000/result/' + result) // Récupère le résultat à partir de la route /result/
                 .then(response => response.text())
                 .then(finalResult => {
+                    console.log(finalResult);
                     document.querySelector('.screen').innerText = finalResult; // Affiche le résultat dans le screen de la calculatrice
                 });
         });
