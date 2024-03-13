@@ -1,21 +1,15 @@
-
-FROM python:3.12
-COPY . /appDocker
-WORKDIR /appDocker
-RUN pip install Flask
-
-CMD ["python", "projet.py"]
-
 # Dockerfile du FRONTEND
-# docker build -t frontend:latest .
+# docker build -t frontend .
 # docker run -p 80:8080 frontend
 
-# Image de base avec un serveur web
+# Utiliser l'image NGINX comme image de base
 FROM nginx
 
-WORKDIR /usr/share/nginx/html
-COPY . /usr/share/nginx/html
+# Copier les fichiers statiques du frontend dans le répertoire `/usr/share/nginx/html` du conteneur
+COPY ./html /usr/share/nginx/html
 
+# Exposer le port 80 pour NGINX
 EXPOSE 80
 
+# Commande par défaut pour démarrer NGINX lorsqu'un conteneur est lancé
 CMD ["nginx", "-g", "daemon off;"]

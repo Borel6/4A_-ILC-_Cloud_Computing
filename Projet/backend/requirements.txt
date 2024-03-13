@@ -1,0 +1,4 @@
+flask==2.0.0
+redis==3.5.3 
+Flask-CORS==3.0.10 
+pika==1.2.0
