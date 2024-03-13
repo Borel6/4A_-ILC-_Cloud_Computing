@@ -12,6 +12,8 @@ WORKDIR /app
 # Copier le code source de l'application Flask dans le conteneur
 COPY . /app
 
+# Installer les dépendances Python de l'application
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Installer Redis
 RUN apt-get update && apt-get install -y redis-server
@@ -25,4 +27,4 @@ EXPOSE 6379
 
 # Commande pour démarrer l'application Flask et le receiver de la queue RabbitMQ
 # et l'exécution du fichier defaultUsers.py
-CMD ["sh", "-c", "projet.py & python initialize.py"]
+CMD ["sh", "-c", "python python.py & python initialize.py"]
