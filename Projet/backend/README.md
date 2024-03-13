@@ -92,3 +92,5 @@ Cette API simple a été développée en utilisant Flask et Redis pour permettre
   - 500 Internal Server Error: Erreur lors de la récupération des tweets par hashtag.
 - **Type de données stockées dans Redis :** `hmset` (Hash), clé (`tweet-<id>`), valeurs (`{'username': username, 'tweet': tweet_text}`)
 
+### Remarque
+- **Problème Dockerfile :** Nous ignorons pourquoi mais nous avons des problèmes pour lancer l'image Dockerfile du backend. Lors de nos tests il est dit à chaque fois que le port 5000 est déjà utilisé même après redémarrage du pc mais même en changeant le numéro de port, le frontend ne parvient pas à communiquer avec le backend
