@@ -9,9 +9,9 @@ def load_default_data():
 
     # Ajout d'utilisateurs par défaut
     users = [
-        {'username': 'beyonder', 'password': '2635'},
-        {'username': 'supremeBeyonder', 'password': '2635'},
-        {'username': 'jerom', 'password': '2635'}
+        {'username': 'SoldierBoy', 'password': '2635'},
+        {'username': 'Homelander', 'password': '2635'},
+        {'username': 'jerome', 'password': '2635'}
     ]
     for user in users:
         user_key = f'id-{user["username"]}'
@@ -20,7 +20,7 @@ def load_default_data():
 
     # Ajout de tweets par défaut
     tweets = [
-        {'username': 'jerome', 'tweet_text': 'je suis un gros #BG barbu'},
+        {'username': 'jerome', 'tweet_text': 'je suis un sacré #BG barbu quand-même'},
         {'username': 'beyonder', 'tweet_text': 'vous attendez quoi pour regarder The Boys'},
         {'username': 'supremeBeyonder', 'tweet_text': 'un mec a dit hier #BreakingBad est suroté LOL'},
         {'username': 'beyonder', 'tweet_text': 'vous benchez combien vous ?'},
